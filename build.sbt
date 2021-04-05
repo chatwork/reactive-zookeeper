@@ -33,9 +33,9 @@ lazy val reactiveZookeeper = (project in file("reactive-zookeeper")).settings(
   name := "reactive-zookeeper",
   commonSettings ++ publishSettings ++ Seq(
     libraryDependencies ++= Seq(
-      "org.apache.zookeeper" % "zookeeper" % zookeeperVersion % "provided",
-      "org.slf4j" % "slf4j-log4j12" % "1.7.21",
-      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+      "org.apache.zookeeper" % "zookeeper" % zookeeperVersion % Provided,
+      "org.slf4j" % "slf4j-log4j12" % "1.7.21" % Provided,
+      "com.typesafe.akka" %% "akka-actor" % akkaVersion % Provided,
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test",
       "org.apache.curator" % "curator-test" % "2.11.0" % "test"
@@ -49,6 +49,7 @@ lazy val reactiveZookeeperExample = (project in file("example"))
   commonSettings ++ Seq(
     name := "reactive-zookeeper-example",
     libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
       "org.apache.zookeeper" % "zookeeper" % zookeeperVersion
     )
   )
