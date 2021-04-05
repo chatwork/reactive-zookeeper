@@ -36,10 +36,9 @@ lazy val reactiveZookeeper = (project in file("reactive-zookeeper")).settings(
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test",
       "org.scalatest" %% "scalatest" % "3.0.5" % "test",
       "org.apache.curator" % "curator-test" % "2.11.0" % "test"
-    ),
-    BintrayPlugin.autoImport.bintrayPackage := "reactive-zookeeper"
+    )
   )
-).enablePlugins(BintrayPlugin)
+)
 
 lazy val reactiveZookeeperExample = (project in file("example"))
   .settings(noPublishSettings)
