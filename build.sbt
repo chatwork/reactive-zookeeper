@@ -1,3 +1,4 @@
+
 val zookeeperVersion = "3.4.8"
 
 val akkaVersion = "2.5.9"
@@ -12,8 +13,10 @@ val commonSettings = Seq(
 )
 
 val noPublishSettings = Seq(
-  publish := (),
-  publishArtifact in Compile := false,
+  publish := {},
+  publishLocal := {},
+  publish / skip := true,
+  Compile / publishArtifact := false,
   releaseCrossBuild := true
 )
 
