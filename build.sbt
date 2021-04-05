@@ -1,7 +1,7 @@
 
 val zookeeperVersion = "3.4.8"
 
-val akkaVersion = "2.5.9"
+val akkaVersion = "2.5.32"
 
 val commonSettings = Seq(
   organization := "github.com/TanUkkii007",
