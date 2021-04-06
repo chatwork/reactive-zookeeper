@@ -1,5 +1,5 @@
 
-val zookeeperVersion = "3.4.8"
+val zookeeperVersion = sys.env.get("ZOOKEEPER_VERSION").filter(_.nonEmpty).getOrElse("3.4.8")
 
 val akkaVersion = "2.5.32"
 

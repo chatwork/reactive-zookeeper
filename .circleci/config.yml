@@ -4,8 +4,21 @@ workflows:
   build_and_test:
     jobs:
       - scala:
-          name: Scala 2.13.x
+          name: Scala 2.13.x and ZooKeeper 3.4.x
           scala_version: 2.13.5
+          zookeeper_version: 3.4.8
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.5.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.5.9
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.6.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.6.2
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.7.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.7.0
       - scala:
           name: Scala 2.12.x
           scala_version: 2.12.13
@@ -22,6 +35,9 @@ jobs:
     parameters:
       scala_version:
         type: string
+      zookeeper_version:
+        type: string
+        default: 3.4.8
     steps:
       - checkout
       - restore_cache:
@@ -29,7 +45,7 @@ jobs:
       - run:
           name: Format and test
           command: |
-            sbt ++<<parameters.scala_version>> test
+            ZOOKEEPER_VERSION=<<parameters.zookeeper_version>> sbt ++<<parameters.scala_version>> test
       - save_cache:
           paths: [ "~/.m2", "~/.ivy2", "~/.cache/coursier" ]
           key: scala-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}-{{ checksum "project/build.properties" }}
