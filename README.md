@@ -22,16 +22,27 @@ Akka scheduler, backoff supervision and circuit breaker can help recover gracefu
 A [example project](/example/src/main/scala/tanukkii/reactivezk/example/zookeeperbook) 
 shows how to use reactive-zookeepr by building a example application from [ZooKeeper book from O'Reilly](https://github.com/fpj/zookeeper-book-example).
 
+## Compatible version
+
+- Scala
+  - 2.11.12, 2.12.13, 2.13.5
+- ZooKeeper
+  - 3.4.x, 3.5.x, 3.6.x, 3.7.x
+- Akka
+  - 2.5.x, 2.6.x
+
 ## Install
 
-```
+```sbt
 libraryDependencies ++= Seq(
   "org.apache.zookeeper" % "zookeeper" % "3.4.8",
-  "github.com/TanUkkii007" % "reactive-zookeeper_2.11" % "0.3.6"
+  "com.chatwork" %% "reactive-zookeeper" % "1.0.0"
 )
 ```
 
 ## Usage
+
+Note) package name starts with `tanukki` since this is a fork of https://github.com/TanUkkii007/reactive-zookeeper
 
 The following import is assumed.
 
@@ -45,7 +56,7 @@ ZooKeeper session is represented as an actor.
 
 You can create a session `ActorRef` with
 
-```
+```scala
 val connectString = "localhost:2181"
 val sessionTimeout = 5000
 system.actorOf(ZooKeeperSessionActor.props(connectString, sessionTimeout)
@@ -106,7 +117,7 @@ expectMsg("Pong")
 
 If a registered actor wants to behave passive or read-only mode when disconnected from ZooKeeper, you can use `ZKConnectionStateAwareActor` trait.
 
-```
+```scala
 trait ZKConnectionStateAwareActor extends Actor {
   // `receive` called under SyncConnected state
   def receiveSyncConnected: Receive
@@ -365,7 +376,7 @@ See [reference.conf](/reactive-zookeeper/src/main/resources/reference.conf).
 
 Default values are follow.
 
-```
+```hocon
 reactive-zookeeper {
   connect-string = "localhost:2181"
   session-timeout = 5000

@@ -1,3 +1,4 @@
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 val zookeeperVersion = sys.env.get("ZOOKEEPER_VERSION").filter(_.nonEmpty).getOrElse("3.4.8")
 
@@ -8,8 +9,8 @@ val scala212Version = "2.12.13"
 val scala213Version = "2.13.5"
 
 val commonSettings = Seq(
-  organization := "github.com/TanUkkii007",
-  homepage := Some(url("https://github.com/TanUkkii007/reactive-zookeeper")),
+  organization := "com.chatwork",
+  homepage := Some(url("https://github.com/chatwork/reactive-zookeeper")),
   scalaVersion := scala213Version,
   crossScalaVersions := Seq(scala211Version, scala212Version, scala213Version),
   scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked", "-encoding", "UTF-8", "-language:implicitConversions", "-language:postfixOps"),
@@ -20,17 +21,48 @@ val noPublishSettings = Seq(
   publish := {},
   publishLocal := {},
   publish / skip := true,
-  Compile / publishArtifact := false,
-  releaseCrossBuild := true
+  Compile / publishArtifact := false
 )
 
 val publishSettings = Seq(
-  releaseCrossBuild := true
+  releaseCrossBuild := true,
+  sonatypeProfileName := "com.chatwork",
+  publishMavenStyle := true,
+  publishTo := sonatypePublishToBundle.value,
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/chatwork/reactive-zookeeper"),
+      "scm:git@github.com:chatwork/reactive-zookeeper.git"
+    )
+  ),
+  developers := List(
+    Developer(id="exoego", name="TATSUNO Yasuhiro", email="ytatsuno.jp@gmail.com", url=url("https://github.com/exoego"))
+  ),
+  versionScheme := Some("semver-spec"),
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runClean,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    releaseStepCommandAndRemaining("+publishSigned"),
+    releaseStepCommand("sonatypeBundleRelease"),
+    tagRelease,
+    setNextVersion,
+    commitNextVersion,
+    pushChanges
+  ),
+  credentials := {
+    val ivyCredentials = (LocalRootProject / baseDirectory).value / ".credentials"
+    val gpgCredentials = (LocalRootProject / baseDirectory).value / ".gpgCredentials"
+    Credentials(ivyCredentials) :: Credentials(gpgCredentials) :: Nil
+  },
 )
 
 lazy val root = (project in file("."))
   .settings(commonSettings)
-  .settings(noPublishSettings)
+  .settings(publishSettings ++ noPublishSettings)
   .aggregate(reactiveZookeeper, reactiveZookeeperExample)
 
 lazy val reactiveZookeeper = (project in file("reactive-zookeeper")).settings(
