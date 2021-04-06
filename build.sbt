@@ -38,7 +38,8 @@ lazy val reactiveZookeeper = (project in file("reactive-zookeeper")).settings(
       "com.typesafe.akka" %% "akka-actor" % akkaVersion % Provided,
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "org.scalatest" %% "scalatest-funsuite" % "3.2.7" % Test,
-      "org.apache.curator" % "curator-test" % "2.11.0" % Test
+      "org.testng" % "testng" % "7.4.0" % Test,
+      "org.apache.curator" % "curator-test" % "5.1.0" % Test
     )
   )
 )
