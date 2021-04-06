@@ -1,7 +1,7 @@
 package tanukkii.reactivezk
 
 import org.apache.zookeeper.AsyncCallback.ChildrenCallback
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 trait ChildrenCallbackConversion {
   implicit def toChildrenCallback[Ctx](f: (Int, String, Ctx, List[String]) => Unit): ChildrenCallback = new ChildrenCallback {
