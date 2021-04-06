@@ -4,20 +4,27 @@ workflows:
   build_and_test:
     jobs:
       - scala:
-          name: Scala 2.13.x
+          name: Scala 2.13.x and ZooKeeper 3.4.x
           scala_version: 2.13.5
+          zookeeper_version: 3.4.8
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.5.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.5.9
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.6.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.6.2
+      - scala:
+          name: Scala 2.13.x and ZooKeeper 3.7.x
+          scala_version: 2.13.5
+          zookeeper_version: 3.7.0
       - scala:
           name: Scala 2.12.x
           scala_version: 2.12.13
       - scala:
           name: Scala 2.11.x
           scala_version: 2.11.12
-      - scala:
-          name: Scala 2.13.x and cross-ZooKeeper
-          matrix:
-            parameters:
-              scala_version: ["2.13.5"]
-              zookeeper_version: ["3.4.14", "3.5.9", "3.6.2", "3.7.0"]
 
 jobs:
   scala:
@@ -30,7 +37,7 @@ jobs:
         type: string
       zookeeper_version:
         type: string
-        default: "3.4.8"
+        default: 3.4.8
     steps:
       - checkout
       - restore_cache:
