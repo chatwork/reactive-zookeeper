@@ -12,6 +12,12 @@ workflows:
       - scala:
           name: Scala 2.11.x
           scala_version: 2.11.12
+      - scala:
+          name: Scala 2.13.x and cross-ZooKeeper
+          matrix:
+            parameters:
+              scala_version: ["2.13.5"]
+              zookeeper_version: ["3.4.14", "3.5.9", "3.6.2", "3.7.0"]
 
 jobs:
   scala:
@@ -22,6 +28,9 @@ jobs:
     parameters:
       scala_version:
         type: string
+      zookeeper_version:
+        type: string
+        default: "3.4.8"
     steps:
       - checkout
       - restore_cache:
@@ -29,7 +38,7 @@ jobs:
       - run:
           name: Format and test
           command: |
-            sbt ++<<parameters.scala_version>> test
+            ZOOKEEPER_VERSION=<<parameters.zookeeper_version>> sbt ++<<parameters.scala_version>> test
       - save_cache:
           paths: [ "~/.m2", "~/.ivy2", "~/.cache/coursier" ]
           key: scala-{{ checksum "build.sbt" }}-{{ checksum "project/plugins.sbt" }}-{{ checksum "project/build.properties" }}
