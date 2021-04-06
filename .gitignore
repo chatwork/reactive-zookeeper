@@ -18,3 +18,10 @@ project/plugins/project/
 
 # IDEA
 .idea
+
+# BSP
+.bsp
+
+# releasing
+.credentials
+.gpgCredentials
