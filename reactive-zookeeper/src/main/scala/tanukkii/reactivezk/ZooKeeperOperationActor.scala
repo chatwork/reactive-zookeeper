@@ -6,7 +6,7 @@ import akka.actor.{ Actor, ActorRef, Props }
 import org.apache.zookeeper._
 import org.apache.zookeeper.data.{ ACL, Stat }
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 sealed trait NoContext
 case object NoContext extends NoContext
@@ -103,7 +103,7 @@ with CreateAsyncCallback with GetDataAsyncCallback with SetDataAsyncCallback wit
     case Multi(ops, ctx) => try {
       // in order to support ZooKeeper versions <3.4.7 synchronous API is used here
       val opResults: util.List[OpResult] = zookeeper.multi(ops.asJava)
-      sender() ! MultiResult(opResults.asScala, ctx)
+      sender() ! MultiResult(opResults.asScala.toSeq, ctx)
     } catch {
       case e: KeeperException => sender() ! MultiFailure(e, ctx)
     }

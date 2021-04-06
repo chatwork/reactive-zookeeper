@@ -4,11 +4,14 @@ workflows:
   build_and_test:
     jobs:
       - scala:
+          name: Scala 2.13.x
+          scala_version: 2.13.5
+      - scala:
           name: Scala 2.12.x
-          scala_version: 2.12.4
+          scala_version: 2.12.13
       - scala:
           name: Scala 2.11.x
-          scala_version: 2.11.8
+          scala_version: 2.11.12
 
 jobs:
   scala:
