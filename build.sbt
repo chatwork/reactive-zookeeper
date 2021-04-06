@@ -62,7 +62,7 @@ val publishSettings = Seq(
 
 lazy val root = (project in file("."))
   .settings(commonSettings)
-  .settings(noPublishSettings)
+  .settings(publishSettings ++ noPublishSettings)
   .aggregate(reactiveZookeeper, reactiveZookeeperExample)
 
 lazy val reactiveZookeeper = (project in file("reactive-zookeeper")).settings(
