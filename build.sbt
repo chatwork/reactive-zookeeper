@@ -2,7 +2,7 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 val zookeeperVersion = sys.env.get("ZOOKEEPER_VERSION").filter(_.nonEmpty).getOrElse("3.4.8")
 
-val akkaVersion = "2.5.32"
+val akkaVersion = "2.6.19"
 
 val scala211Version = "2.11.12"
 val scala212Version = "2.12.13"
