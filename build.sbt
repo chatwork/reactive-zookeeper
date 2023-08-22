@@ -2,9 +2,8 @@ import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 val zookeeperVersion = sys.env.get("ZOOKEEPER_VERSION").filter(_.nonEmpty).getOrElse("3.4.8")
 
-val akkaVersion = "2.5.32"
+val akkaVersion = "2.6.19"
 
-val scala211Version = "2.11.12"
 val scala212Version = "2.12.13"
 val scala213Version = "2.13.5"
 
@@ -12,7 +11,7 @@ val commonSettings = Seq(
   organization := "com.chatwork",
   homepage := Some(url("https://github.com/chatwork/reactive-zookeeper")),
   scalaVersion := scala213Version,
-  crossScalaVersions := Seq(scala211Version, scala212Version, scala213Version),
+  crossScalaVersions := Seq(scala212Version, scala213Version),
   scalacOptions ++= Seq("-feature", "-deprecation", "-unchecked", "-encoding", "UTF-8", "-language:implicitConversions", "-language:postfixOps"),
   licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 )
